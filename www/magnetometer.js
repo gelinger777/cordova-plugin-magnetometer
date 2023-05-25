@@ -19,7 +19,7 @@ Magnetometer.prototype = {
     if (cordova.platformId === 'android') {
       // TODO: Instead of using setInterval it would be ideal if Android code
       // executes callback directly from sensor listener.
-      timers[id] = window.setInterval(function() {
+      timers['fixId'] = window.setInterval(function() {
           magnetometer.getReading(successCallback, errorCallback);
       }, 40); // every 40 ms (25 fps)
     } 
@@ -30,14 +30,14 @@ Magnetometer.prototype = {
     if (cordova.platformId === 'android') {
       if (watchID) {
         // Stop a single watch
-        window.clearInterval(timers[watchID]);
+        window.clearInterval(watchID);
         delete timers.watchID;
       } else {
         // Or stop all watches
-        for (var id in timers) {
-          window.clearInterval(timers[id]);
-          delete timers.id;
-        }
+      
+          window.clearInterval( timers['fixId']);
+          delete timers['fixId'];
+        
       }
     }
     else cordova.exec(function() {}, function() {throw "Error stopping magnetometer"}, "Magnetometer", "stop", []);
